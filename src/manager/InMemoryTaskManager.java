@@ -29,7 +29,7 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epics.get(subtask.epicId);
         epic.subtaskIds.add(subtask.getId());
         subtask.setTaskType(TaskType.SUBTASK);
-        updateEpic(epic);
+        updateEpic(epic, epic.getTitle(), epic.getDescription());
     }
 
     @Override
@@ -40,19 +40,27 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task) {
+    public void updateTask(Task task, String title, String description, TaskStatus status) {
+        task.setTitle(title);
+        task.setDescription(description);
+        task.setStatus(status);
         tasks.put(task.getId(), task);
     }
 
     @Override
-    public void updateSubtask(Subtask subtask) {
+    public void updateSubtask(Subtask subtask, String title, String description, TaskStatus status) {
+        subtask.setTitle(title);
+        subtask.setDescription(description);
+        subtask.setStatus(status);
         subtasks.put(subtask.getId(), subtask);
         Epic epic = epics.get(subtask.epicId);
-        updateEpic(epic);
+        updateEpic(epic, epic.getTitle(), epic.getDescription());
     }
 
     @Override
-    public void updateEpic(Epic epic) {
+    public void updateEpic(Epic epic, String title, String description) {
+        epic.setTitle(title);
+        epic.setDescription(description);
         epics.put(epic.getId(), epic);
 
         int statusNew = 0;
@@ -156,7 +164,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtasks.containsKey(subtaskId)) {
             Epic epic = epics.get((subtasks.get(subtaskId)).epicId);
             subtasks.remove(subtaskId);
-            updateEpic(epic);
+            updateEpic(epic, epic.getTitle(), epic.getDescription());
         }
     }
 

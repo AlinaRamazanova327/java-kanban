@@ -55,8 +55,7 @@ public class Main {
         System.out.println(manager.getTaskById(1));
         System.out.println(manager.getTaskById(2));
         System.out.println(manager.getEpicById(3));
-        subtask1.setStatus(TaskStatus.DONE);
-        manager.updateSubtask(subtask1);
+        manager.updateSubtask(subtask1, "subtask1", "descr1", TaskStatus.DONE);
         System.out.println("Подзадачи в эпике" + manager.getAllSubtaskByEpic(epic1));
         System.out.println(manager.getEpicById(3));
         System.out.println(manager.getSubtaskById(4));

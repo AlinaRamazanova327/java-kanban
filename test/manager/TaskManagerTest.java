@@ -60,10 +60,7 @@ class TaskManagerTest {
     @Test
     void updateTask() {
         Task task1 = new Task("task1", "d1");
-        task1.setTitle("new task1");
-        task1.setDescription("description2");
-        task1.setStatus(TaskStatus.DONE);
-        manager.updateTask(task1);
+        manager.updateTask(task1, "new task1", "description2", TaskStatus.DONE);
         assertEquals("new task1", manager.getTaskById(task1.getId()).getTitle());
         assertEquals("description2", manager.getTaskById(task1.getId()).getDescription());
         assertEquals(TaskStatus.DONE, manager.getTaskById(task1.getId()).getStatus());

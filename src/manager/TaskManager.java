@@ -3,6 +3,7 @@ package manager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
+import tasks.TaskStatus;
 
 import java.util.List;
 
@@ -14,11 +15,11 @@ public interface TaskManager {
 
     void addEpic(Epic epic);
 
-    void updateTask(Task task);
+    void updateTask(Task task, String title, String description, TaskStatus status);
 
-    void updateSubtask(Subtask subtask);
+    void updateSubtask(Subtask subtask, String title, String description, TaskStatus status);
 
-    void updateEpic(Epic epic);
+    void updateEpic(Epic epic, String title, String description);
 
     List<Task> getAllTasks();
 
