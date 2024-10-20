@@ -15,9 +15,11 @@ public interface TaskManager {
 
     void addEpic(Epic epic);
 
-    void updateTask(Task task, String title, String description, TaskStatus status);
+    void updateTask(Task task, String title,
+                    String description, TaskStatus status);
 
-    void updateSubtask(Subtask subtask, String title, String description, TaskStatus status);
+    void updateSubtask(Subtask subtask, String title,
+                       String description, TaskStatus status);
 
     void updateEpic(Epic epic, String title, String description);
 

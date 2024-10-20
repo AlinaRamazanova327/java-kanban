@@ -12,8 +12,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private int nextId = 1;
-    HistoryManager historyManager = Managers.getDefaultHistory();
-
+   private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public void addTask(Task task) {
@@ -40,7 +39,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateTask(Task task, String title, String description, TaskStatus status) {
+    public void updateTask(Task task, String title,
+                           String description, TaskStatus status) {
         task.setTitle(title);
         task.setDescription(description);
         task.setStatus(status);
@@ -48,7 +48,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void updateSubtask(Subtask subtask, String title, String description, TaskStatus status) {
+    public void updateSubtask(Subtask subtask, String title,
+                              String description, TaskStatus status) {
         subtask.setTitle(title);
         subtask.setDescription(description);
         subtask.setStatus(status);
@@ -129,29 +130,28 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task getTaskById(int taskId) {
-        if (tasks.containsKey(taskId)) {
-            historyManager.add(tasks.get(taskId));
-            return tasks.get(taskId);
-        }
-        return null;
+        Task task = tasks.get(taskId);
+        if (task != null) {
+                historyManager.add(task);
+                return task;
+        } return null;
     }
-
     @Override
     public Subtask getSubtaskById(int subtaskId) {
-        if (subtasks.containsKey(subtaskId)) {
-            historyManager.add(subtasks.get(subtaskId));
-            return subtasks.get(subtaskId);
+        Subtask subtask = subtasks.get(subtaskId);
+        if (subtask != null) {
+                historyManager.add(subtask);
+                return subtask;
+        } return null;
         }
-        return null;
-    }
 
     @Override
     public Epic getEpicById(int epicId) {
-        if (epics.containsKey(epicId)) {
-            historyManager.add(epics.get(epicId));
-            return epics.get(epicId);
-        }
-        return null;
+        Epic epic = epics.get(epicId);
+        if (epic != null) {
+                historyManager.add(epic);
+                return epic;
+        }return null;
     }
 
     @Override
