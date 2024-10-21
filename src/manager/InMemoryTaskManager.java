@@ -12,7 +12,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtasks = new HashMap<>();
     private final Map<Integer, Epic> epics = new HashMap<>();
     private int nextId = 1;
-   private final HistoryManager historyManager = Managers.getDefaultHistory();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     @Override
     public void addTask(Task task) {
@@ -134,7 +134,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (task != null) {
                 historyManager.add(task);
                 return task;
-        } return null;
+        }
+        return null;
     }
     @Override
     public Subtask getSubtaskById(int subtaskId) {
@@ -142,7 +143,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtask != null) {
                 historyManager.add(subtask);
                 return subtask;
-        } return null;
+        }
+        return null;
         }
 
     @Override
@@ -151,7 +153,8 @@ public class InMemoryTaskManager implements TaskManager {
         if (epic != null) {
                 historyManager.add(epic);
                 return epic;
-        }return null;
+        }
+        return null;
     }
 
     @Override
