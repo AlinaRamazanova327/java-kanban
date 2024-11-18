@@ -15,6 +15,15 @@ class HistoryManagerTest {
         historyManager.add(task1);
         assertEquals(1, (historyManager.getHistory()).size());
         historyManager.add(task1);
-        assertEquals(2, (historyManager.getHistory()).size());
+        assertEquals(1, (historyManager.getHistory()).size());
+    }
+
+    @Test
+    void remove() {
+        Task task2 = new Task("task2", "t2");
+        historyManager.add(task1);
+        historyManager.add(task2);
+        historyManager.remove(task1.getId());
+        assertEquals(1, historyManager.getHistory().size());
     }
 }
