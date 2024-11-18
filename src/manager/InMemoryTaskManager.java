@@ -137,6 +137,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return null;
     }
+
     @Override
     public Subtask getSubtaskById(int subtaskId) {
         Subtask subtask = subtasks.get(subtaskId);
