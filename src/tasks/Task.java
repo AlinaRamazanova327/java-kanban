@@ -9,13 +9,9 @@ public class Task {
     private TaskStatus status;
     private TaskType taskType;
 
-    public Task(String title, String description){
-
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
-    }
-    public TaskType getTaskType() {
-        return taskType;
     }
 
     public void setTaskType(TaskType taskType) {
