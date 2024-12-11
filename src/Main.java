@@ -55,10 +55,5 @@ public class Main {
         System.out.println(manager.getEpicById(7));
         System.out.println(manager.getSubtaskById(5));
         System.out.println("История:" + manager.getHistory());
-        manager.removeTaskById(2);
-        System.out.println("История:" + manager.getHistory());
-        System.out.println(manager.getAllSubtaskByEpic(epic1));
-        manager.removeEpicById(3);
-        System.out.println("История:" + manager.getHistory());
     }
 }

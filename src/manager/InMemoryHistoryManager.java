@@ -60,9 +60,9 @@ public class InMemoryHistoryManager implements HistoryManager {
         if (history.containsKey(task.getId())) {
             return;
         }
-            Node node = new Node(task);
-            linkLast(node);
-            history.put(task.getId(), node);
+        Node node = new Node(task);
+        linkLast(node);
+        history.put(task.getId(), node);
     }
 
     @Override
