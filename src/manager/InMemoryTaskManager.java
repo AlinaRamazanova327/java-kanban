@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> tasks = new HashMap<>();
-    private final Map<Integer, Subtask> subtasks = new HashMap<>();
-    private final Map<Integer, Epic> epics = new HashMap<>();
+    protected static final Map<Integer, Task> tasks = new HashMap<>();
+    protected static final Map<Integer, Subtask> subtasks = new HashMap<>();
+    protected static final Map<Integer, Epic> epics = new HashMap<>();
     private int nextId = 1;
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
@@ -35,6 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
     public void addEpic(Epic epic) {
         epic.setId(nextId++);
         epics.put(epic.getId(), epic);
+        epic.setStatus(TaskStatus.NEW);
         epic.setTaskType(TaskType.EPIC);
     }
 
