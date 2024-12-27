@@ -1,15 +1,18 @@
+import manager.FileBackedTaskManager;
 import manager.Managers;
-import manager.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
+import java.io.File;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        TaskManager manager = Managers.getDefault();
+        String fileName = "tasks.csv";
+        File file = new File(fileName);
+        FileBackedTaskManager manager = Managers.getFromFile(fileName);
 
         Task task1 = new Task("task1", "description1");
         task1.setStatus(TaskStatus.NEW);
@@ -39,21 +42,21 @@ public class Main {
 
         Epic epic2 = new Epic("epic2", "description2");
         manager.addEpic(epic2);
-
-        System.out.println(manager.getTaskById(2));
-        System.out.println(manager.getTaskById(1));
-        System.out.println(manager.getTaskById(2));
-        System.out.println("История:" + manager.getHistory());
-        System.out.println(manager.getTaskById(2));
-        System.out.println(manager.getEpicById(3));
-        System.out.println(manager.getTaskById(1));
-        System.out.println("История:" + manager.getHistory());
-        System.out.println(manager.getSubtaskById(4));
-        System.out.println(manager.getTaskById(1));
-        System.out.println(manager.getEpicById(3));
-        System.out.println(manager.getSubtaskById(6));
-        System.out.println(manager.getEpicById(7));
-        System.out.println(manager.getSubtaskById(5));
-        System.out.println("История:" + manager.getHistory());
+        FileBackedTaskManager loaded = FileBackedTaskManager.loadFromFile(file);
+        System.out.println(loaded.getTaskById(2));
+        System.out.println(loaded.getTaskById(1));
+        System.out.println(loaded.getTaskById(2));
+        System.out.println("История:" + loaded.getHistory());
+        System.out.println(loaded.getTaskById(2));
+        System.out.println(loaded.getEpicById(3));
+        System.out.println(loaded.getTaskById(1));
+        System.out.println("История:" + loaded.getHistory());
+        System.out.println(loaded.getSubtaskById(4));
+        System.out.println(loaded.getTaskById(1));
+        System.out.println(loaded.getEpicById(3));
+        System.out.println(loaded.getSubtaskById(6));
+        System.out.println(loaded.getEpicById(7));
+        System.out.println(loaded.getSubtaskById(5));
+        System.out.println("История:" + loaded.getHistory());
     }
 }
