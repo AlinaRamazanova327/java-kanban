@@ -1,15 +1,29 @@
-import manager.HistoryManager;
-import manager.InMemoryHistoryManager;
-import manager.Managers;
-import manager.TaskManager;
+import manager.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Task;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HistoryManagerTest {
-    TaskManager taskManager = Managers.getDefault();
+
     HistoryManager historyManager = new InMemoryHistoryManager();
+    FileBackedTaskManager manager;
+    File file;
+
+    @BeforeEach
+    void setUp() {
+        try {
+            file = File.createTempFile("testTasks", ".csv");
+            String stringFile = String.valueOf(file);
+            manager = new FileBackedTaskManager(stringFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Test
     void getHistory() {
@@ -24,8 +38,8 @@ class HistoryManagerTest {
     void remove() {
         Task task1 = new Task("task1", "d1");
         Task task2 = new Task("task2", "t2");
-        taskManager.addTask(task1);
-        taskManager.addTask(task2);
+        manager.addTask(task1);
+        manager.addTask(task2);
         historyManager.add(task1);
         historyManager.add(task2);
         historyManager.remove(task1.getId());

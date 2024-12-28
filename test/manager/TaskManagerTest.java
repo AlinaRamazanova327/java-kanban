@@ -1,18 +1,33 @@
 package manager;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TaskManagerTest {
 
-    TaskManager manager = Managers.getDefault();
+    FileBackedTaskManager manager;
+    File file;
+
+    @BeforeEach
+    void setUp() {
+        try {
+            file = File.createTempFile("testTasks", ".csv");
+            String stringFile = String.valueOf(file);
+            manager = new FileBackedTaskManager(stringFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Test
     void shouldReturnTask1EqualsTask2() {

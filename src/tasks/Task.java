@@ -14,6 +14,10 @@ public class Task {
         this.description = description;
     }
 
+    public TaskType getTaskType() {
+        return taskType;
+    }
+
     public void setTaskType(TaskType taskType) {
         this.taskType = taskType;
     }
@@ -65,12 +69,8 @@ public class Task {
 
     @Override
     public String toString() {
-        return taskType + "{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
+        return getId() + "," + getTaskType() + "," + getTitle() + "," + getStatus() + ","
+                + getDescription();
     }
 
 }
