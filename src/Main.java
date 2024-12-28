@@ -1,9 +1,11 @@
 import manager.FileBackedTaskManager;
 import manager.Managers;
+import manager.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
+
 import java.io.File;
 
 public class Main {
@@ -12,7 +14,7 @@ public class Main {
 
         String fileName = "tasks.csv";
         File file = new File(fileName);
-        FileBackedTaskManager manager = Managers.getFromFile(fileName);
+        TaskManager manager = Managers.getDefault(fileName);
 
         Task task1 = new Task("task1", "description1");
         task1.setStatus(TaskStatus.NEW);
