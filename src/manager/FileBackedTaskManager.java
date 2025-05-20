@@ -1,7 +1,11 @@
 package manager;
+
 import tasks.*;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
     private final String file;
@@ -12,7 +16,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
 
     public void save() {
         try (Writer fileWriter = new FileWriter(file)) {
-            fileWriter.write("id,type,name,status,description,epic\n");
+            fileWriter.write("id,type,name,status,description,startTime,duration,endTime,epic\n");
             for (Task task : tasks.values()) {
                 fileWriter.write(task.toString() + "\n");
             }
@@ -56,19 +60,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
             epic.setId(Integer.parseInt(params[0]));
             epic.setStatus(TaskStatus.valueOf(params[3]));
             epic.setTaskType(TaskType.EPIC);
+            epic.setStartTime(params[5].isEmpty() || params[5].equals("null") ? null : LocalDateTime.parse(params[5]));
+            epic.setDuration(params[6].isEmpty() || params[6].equals("null") ? null : Duration.parse(params[6]));
+            epic.setEndTime(params[7].isEmpty() || params[7].equals("null") ? null : LocalDateTime.parse(params[7]));
             return epic;
         } else if (params[1].equals("TASK")) {
             Task task = new Task(params[2], params[4]);
             task.setId(Integer.parseInt(params[0]));
             task.setStatus(TaskStatus.valueOf(params[3]));
             task.setTaskType(TaskType.TASK);
+            task.setStartTime(params[5].isEmpty() || params[5].equals("null") ? null : LocalDateTime.parse(params[5]));
+            task.setDuration(params[6].isEmpty() || params[6].equals("null") ? null : Duration.parse(params[6]));
             return task;
         } else {
             Subtask subtask = new Subtask(params[2], params[4]);
             subtask.setId(Integer.parseInt(params[0]));
-            subtask.epicId = Integer.parseInt(params[5]);
+            subtask.epicId = Integer.parseInt(params[8]);
             subtask.setStatus(TaskStatus.valueOf(params[3]));
             subtask.setTaskType(TaskType.SUBTASK);
+            subtask.setStartTime(params[5].isEmpty() || params[5].equals("null") ? null : LocalDateTime.parse(params[5]));
+            subtask.setDuration(params[6].isEmpty() || params[6].equals("null") ? null : Duration.parse(params[6]));
             return subtask;
         }
     }
@@ -92,20 +103,20 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     }
 
     @Override
-    public void updateTask(Task task, String title, String description, TaskStatus status) {
-        super.updateTask(task, title, description, status);
+    public void updateTask(Task task) {
+        super.updateTask(task);
         save();
     }
 
     @Override
-    public void updateSubtask(Subtask subtask, String title, String description, TaskStatus status) {
-        super.updateSubtask(subtask, title, description, status);
+    public void updateSubtask(Subtask subtask) {
+        super.updateSubtask(subtask);
         save();
     }
 
     @Override
-    public void updateEpic(Epic epic, String title, String description) {
-        super.updateEpic(epic, title, description);
+    public void updateEpic(Epic epic) {
+        super.updateEpic(epic);
         save();
     }
 
