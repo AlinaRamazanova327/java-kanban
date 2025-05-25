@@ -1,5 +1,7 @@
 package tasks;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -10,8 +12,11 @@ public class Task {
     private String description;
     private TaskStatus status;
     private TaskType taskType;
+    @SerializedName("duration")
     private Duration duration;
+    @SerializedName("startTime")
     private LocalDateTime startTime;
+    @SerializedName("endTime")
     private LocalDateTime endTime;
 
     public Task(String title, String description) {
