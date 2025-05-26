@@ -48,28 +48,16 @@ public abstract class BaseHttpHandler implements HttpHandler {
     protected Endpoints getEndpoints(String requestPath, String requestMethod) {
         String[] parts = requestPath.split("/");
         if (parts.length < 2) return null;
-
         String resourceName = parts[1];
-        switch (resourceName) {
-            case "tasks":
-            case "epics":
-            case "subtasks":
-                switch (requestMethod) {
-                    case "GET" -> {
-                        return parts.length == 2 ? Endpoints.GET : Endpoints.GET_BY_ID;
-                    }
-                    case "POST" -> {
-                        return Endpoints.POST;
-                    }
-                    case "DELETE" -> {
-                        return Endpoints.DELETE;
-                    }
-                }
-                break;
-            default:
-                return null;
-        }
-        return null;
+        return switch (resourceName) {
+            case "tasks", "epics", "subtasks" -> switch (requestMethod) {
+                case "GET" -> parts.length == 2 ? Endpoints.GET : Endpoints.GET_BY_ID;
+                case "POST" -> Endpoints.POST;
+                case "DELETE" -> Endpoints.DELETE;
+                default -> null;
+            };
+            default -> null;
+        };
     }
 
     protected int getId(String path) {

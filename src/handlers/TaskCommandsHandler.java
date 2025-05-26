@@ -21,34 +21,29 @@ public class TaskCommandsHandler extends BaseHttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         List<Task> tasks;
         String command = getCommand(exchange.getRequestURI().getPath());
-
         switch (command) {
-            case "history":
+            case "history" -> {
                 try {
                     tasks = taskManager.getHistory();
                     sendSuccessWithData(exchange, gson.toJson(tasks));
                 } catch (Exception e) {
                     sendInternalError(exchange);
                 }
-                break;
-            case "prioritized":
+            }
+            case "prioritized" -> {
                 try {
                     tasks = taskManager.getPrioritizedTasks();
                     sendSuccessWithData(exchange, gson.toJson(tasks));
                 } catch (Exception e) {
                     sendInternalError(exchange);
                 }
-                break;
-            case null, default:
-                sendBadRequest(exchange);
+            }
+            case null, default -> sendBadRequest(exchange);
         }
     }
 
     protected String getCommand(String path) {
         String[] parts = path.split("/");
-        if (parts.length > 1 && !parts[1].isEmpty()) {
-            return parts[1];
-        }
-        return null;
+        return parts.length > 1 && !parts[1].isEmpty() ? parts[1] : null;
     }
 }
